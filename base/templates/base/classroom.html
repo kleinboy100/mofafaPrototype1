@@ -1,0 +1,151 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<style>
+    .home-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr; /* Divide into three columns, with the middle column twice as wide */
+        grid-column-gap: 20px; /* Adjust spacing between columns */
+    }
+
+    .grades-column {
+        grid-column: 1; /* Grades column spans the first column */
+    }
+
+    .other-content-column {
+        grid-column: 2; /* Other content spans the second column */
+    }
+
+    .third-column {
+        grid-column: 3; /* Third column spans the third column */
+    }
+
+    .grade-container {
+        margin-bottom: 20px; /* Adjust spacing between grades */
+    }
+
+    .grade-container hr {
+        margin-top: 5px; /* Adjust spacing above the <hr> */
+    }
+
+    .grade-container select {
+        margin-top: 10px; /* Adjust spacing between grade name and dropdown list */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+
+    .button {
+        display: block;
+        padding: 15px 30px; /* Adjust padding as needed */
+        background-color: #00b00f; /* Adjust button color */
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 20px;
+        transition: background-color 0.3s ease;
+        text-align: center;
+    }
+    
+    .button:hover {
+        background-color: #005ff3; /* Adjust hover color */
+    }
+
+
+
+    th, td {
+        border: 2px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<div class="home-container">
+    <div class="grades-column">
+        <h1>{{classroom.name}}</h1>
+        <hr>
+        <div style="padding: 20px;">
+            
+            <a href="{% url 'update-marks' pk=subjects.0.id %}" class="button">Edit Learners Marks</a>
+        </div><!-- Add content for the first column (if any) -->
+    </div>
+
+    <div class="other-content-column">
+     
+        <h1>Learner Progress</h1>
+        <hr>
+        <div style="padding: 20px">
+            
+           
+            <hr>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Task 1</th>
+                        <th>Task 2</th>
+                        <th>Task 3</th>
+                        <th>Term 1</th>
+
+                        <th>Task 4</th>
+                        <th>Task 5</th>
+                        <th>Task 6</th>
+                        <th>Term 2</th>
+
+                        <th>Task 7</th>
+                        <th>Task 8</th>
+                        <th>Task 9</th>
+                        <th>Term 3</th>
+
+                        <th>Task 10</th>
+                        <th>Task 11</th>
+                        <th>Task 12</th>
+                        <th>Term 4</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mark in marks %}
+                    <tr>
+                        <td>{{ mark.learner.name }} {{ mark.learner.surname }}</td>
+                        <td>{{ mark.task1 }}</td>
+                        <td>{{ mark.task2 }}</td>
+                        <td>{{ mark.task3 }}</td>
+                        <td>{{ mark.term }}</td>
+
+                        <td>{{ mark.task4 }}</td>
+                        <td>{{ mark.task5 }}</td>
+                        <td>{{ mark.task6 }}</td>
+                        <td>{{ mark.term2 }}</td>
+
+                        <td>{{ mark.task7 }}</td>
+                        <td>{{ mark.task8 }}</td>
+                        <td>{{ mark.task9 }}</td>
+                        <td>{{ mark.term3 }}</td>
+
+                        <td>{{ mark.task10 }}</td>
+                        <td>{{ mark.task11 }}</td>
+                        <td>{{ mark.task12 }}</td>
+                        <td>{{ mark.term4 }}</td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="third-column">
+        <!-- Content for the third column (if any) -->
+    </div>
+</div>
+
+{% endblock %}

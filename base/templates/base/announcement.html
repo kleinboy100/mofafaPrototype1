@@ -1,0 +1,202 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+<style>
+    /* Define the overall layout for the page */
+    .container {
+        display: grid;
+        grid-template-columns: 3fr 1fr; /* Divide into two columns, with the first column three times as wide */
+        gap: 20px; /* Add some space between columns */
+    }
+    
+    /* Style the content columns */
+    .column {
+        padding: 20px; /* Add padding for spacing */
+        background-color: #f0f2f5; /* Light grey background */
+        border-radius: 8px; /* Add rounded corners */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add shadow for depth */
+        overflow-y: auto; /* Add vertical scroll bar */
+        max-height: 480px; /* Limit the height of the column to enable scrolling */
+    }
+
+    /* Style the comment box */
+    .comment-box {
+        background-color: #fff; /* White background */
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Add shadow for depth */
+    }
+
+    /* Style the comment content */
+    .comment-content {
+        color: #333; /* Dark grey text */
+        margin-bottom: 10px;
+    }
+
+    /* Style the timestamp */
+    .timestamp {
+        color: #999; /* Light grey timestamp */
+    }
+
+    /* Style the like button */
+    .like-button {
+        background-color: #007bff; /* Facebook blue */
+        color: #fff; /* White text */
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; /* Add smooth transition */
+    }
+
+    .like-button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    /* Style the online friends container */
+    .online-friends-container {
+        padding: 20px;
+    }
+
+    /* Style the friend box */
+    .friend-box {
+        background-color: #f0f0f0; /* Light grey background */
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Add shadow for depth */
+    }
+
+    
+    .replied-to {
+        background-color: #ccccff; /* Green background */
+        color: #000; /* Black text */
+        padding: 5px; /* Add padding for spacing */
+        border-radius: 5px; /* Add rounded corners */
+        font-weight: bold; /* Make the text bold */
+    }
+
+    /* Style the friend content */
+    .friend {
+        display: flex;
+        align-items: center;
+    }
+
+    .friend img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .username {
+        font-weight: bold;
+    }
+
+    /* Style the comment form */
+    .comment-form input[type="text"] {
+        width: 100%; /* Set the width to 100% to fill the container */
+        height: 50px; /* Set the desired height */
+        padding: 10px; /* Add padding for better appearance */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        border: 2px solid #ccc; /* Add a border */
+        border-radius: 5px; /* Add rounded corners */
+        transition: border-color 0.3s, box-shadow 0.3s; /* Add smooth transitions for border color and shadow */
+    }
+
+    /* Style the comment form on focus */
+    .comment-form input[type="text"]:focus {
+        border-color: #007bff; /* Change border color on focus */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a shadow on focus */
+    }
+
+    /* Style the section titles */
+    h3 {
+        font-family: 'Arial', sans-serif; /* Change font family */
+        font-size: 24px; /* Increase font size */
+        color: #333; /* Dark grey color */
+        margin-bottom: 15px; /* Add some space below the title */
+    }
+
+    h1 {
+        font-family: 'Arial', sans-serif; /* Change font family */
+        font-size: 36px; /* Increase font size */
+        color: #333; /* Dark grey color */
+        margin-bottom: 20px; /* Add some space below the title */
+    }
+</style>
+
+<div class="container">
+    <!-- Comments column -->
+    <div class="column">
+        <div class="announcement">
+            
+            <div  class="replied-to">
+                <small>{{announcement.title}}</small>
+                </div>
+            <h1>{{ announcement.description }}</h1>
+        </div>
+        <hr>
+
+        <h3>Comments</h3>
+        
+        {% if request.user.is_authenticated%}
+        <div>
+        <form class="comment-form" method="POST" action="" >
+            {% csrf_token %}
+            <input type="text" name="body" placeholder="Write Message Here..." />
+        </form>
+
+        </div>
+        {% endif %}
+        {% for comment in comments %}
+        <div class="comment-box">
+            <div class="comment">
+                <div class="user-info">
+                    <img src="{% static 'images/avatar.svg'%}"  style="width: 35px; height: 35px;">
+                    <div class="comment-content">
+                        <div class="username">@{{ comment.user.username }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="replied-to">
+                <p>{{ comment.body }}</p>
+            </div>
+            
+            <div  class="comment-content bold">
+                <small>Replied to: {{comment.announcement.title}}</small>
+                </div>
+
+            <div class="timestamp">
+                <small>{{ comment.created|timesince }} ago</small>
+            </div>
+            <div class="comment-actions">
+                <button class="like-button">Like</button>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+
+    
+    <!-- Other content column -->
+    <div class="column">
+        <div class="online-friends-container">
+            <h3>Participants</h3>
+            {% for user in all_users %}
+            <div class="friend-box">
+                <div class="friend">
+                    <img src="{% static 'images/avatar.svg' %}" >
+                    <span class="username">@{{ user.username }}</span>
+                    <p>{{comment.body }}</p>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

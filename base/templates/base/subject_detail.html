@@ -1,0 +1,298 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    .home-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr; /* Divide into three columns, with the middle column twice as wide */
+        grid-column-gap: 20px; /* Adjust spacing between columns */
+    }
+
+    .grades-column {
+        grid-column: 1; /* Grades column spans the first column */
+    }
+
+    .other-content-column {
+        grid-column: 2; /* Other content spans the second column */
+    }
+
+    .third-column {
+        grid-column: 3; /* Third column spans the third column */
+    }
+
+    .grade-container {
+        margin-bottom: 20px; /* Adjust spacing between grades */
+    }
+
+    .grade-container hr {
+        margin-top: 5px; /* Adjust spacing above the <hr> */
+    }
+
+    .grade-container select {
+        margin-top: 10px; /* Adjust spacing */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+
+    .button {
+        display: block;
+        padding: 15px 30px; /* Adjust padding as needed */
+        background-color: #00b00f; /* Adjust button color */
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 20px;
+        transition: background-color 0.3s ease;
+        text-align: center;
+    }
+    
+    .button:hover {
+        background-color: #005ff3; /* Adjust hover color */
+    }
+
+
+
+    th, td {
+        border: 2px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<div class="home-container">
+    <div class="grades-column">
+        <div style="padding: 20px;">
+        <h3>Subject: 
+            
+            {{ subjects.name }} 
+        </h3> <!-- Content for the first column (if any) -->
+         <hr>
+        </div>
+        {% comment %} <div>
+           Department: {{department.name }}
+        </div> {% endcomment %}
+
+       
+        {% comment %} <div class="grade-container">
+            <a href="{% url 'update-marks' pk=subjects.id %}" class="button">Edit Learners Marks</a>
+        </div> {% endcomment %}
+    
+  
+    </div>
+
+    <div class="other-content-column">
+        <div style="padding: 20px">
+        <h1>Learner Progress</h1>
+
+        <hr>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Task 1</th>
+                    <th>Task 2</th>
+                    <th>Task 3</th>
+                    <th>Term 1</th>
+
+                    <th>Task 4</th>
+                    <th>Task 5</th>
+                    <th>Task 6</th>
+                    <th>Term 2</th>
+
+                    <th>Task 7</th>
+                    <th>Task 8</th>
+                    <th>Task 9</th>
+                    <th>Term 3</th>
+
+                    <th>Task 10</th>
+                    <th>Task 11</th>
+                    <th>Task 12</th>
+                    <th>Term 4</th>
+                    <th>Average</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for learner in learners %}
+                <tr>
+                    <td>{{ learner.id }}</td>
+                    <td>{{ learner.name }}</td>
+                    <td>{{ learner.surname }}</td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task1 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task2 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task3 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {% if mark.term %}
+                                    {{ mark.term|floatformat:2 }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+
+
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task4 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task5 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task6 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {% if mark.term2 %}
+                                    {{ mark.term2|floatformat:2 }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task7 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task8 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task9 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {% if mark.term3 %}
+                                    {{ mark.term3|floatformat:2 }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task10 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task11 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task12 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {% if mark.term4 %}
+                                    {{ mark.term4|floatformat:2 }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {% if mark.average_score %}
+                                    {{ mark.average_score|floatformat:2 }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+                <!-- Last row for task averages -->
+                <tr>
+                    <td colspan="3">Task Averages:</td>
+                    <td>{{ task1_average }}</td>
+                    <td>{{ task2_average }}</td>
+                    <td>{{ task3_average }}</td>
+                    <td></td> <!-- Leave term empty for task averages -->
+                    <td></td> <!-- Leave average empty for task averages -->
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Add your form or any other content here -->
+    </div>
+
+    <div class="third-column">
+        <!-- Content for the third column (if any) -->
+    </div>
+</div>
+
+{% endblock %}

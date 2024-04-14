@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Marks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns as needed */
+            grid-gap: 20px;
+        }
+
+        .term-box {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .term-box h2 {
+            margin: 0;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .term-details {
+            padding: 20px;
+        }
+
+        .term-details label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            grid-column: 1 / -1;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Edit Marks</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <!-- Only include subject and learner fields here -->
+    <div class="term-box" style="grid-column: span 4;">
+        <h2>Learner and Subject</h2>
+        <div class="term-details">
+            <label for="id_learner">Learner:</label>
+            {{ form.learner }}
+            <label for="id_subject">Subject:</label>
+            {{ form.subject }}
+        </div>
+    </div>
+
+    <div class="term-box">
+        <h2>Term 1</h2>
+        <div class="term-details">
+            <label for="id_task1">Task 1:</label>
+            {{ form.task1 }}
+            <label for="id_task2">Task 2:</label>
+            {{ form.task2 }}
+            <label for="id_task3">Task 3:</label>
+            {{ form.task3 }}
+        </div>
+    </div>
+
+    <div class="term-box">
+        <h2>Term 2</h2>
+        <div class="term-details">
+            <label for="id_task4">Task 1:</label>
+            {{ form.task4 }}
+            <label for="id_task5">Task 2:</label>
+            {{ form.task5 }}
+            <label for="id_task6">Task 3:</label>
+            {{ form.task6 }}
+        </div>
+    </div>
+
+    <div class="term-box">
+        <h2>Term 3</h2>
+        <div class="term-details">
+            <label for="id_task7">Task 1:</label>
+            {{ form.task7 }}
+            <label for="id_task8">Task 2:</label>
+            {{ form.task8 }}
+            <label for="id_task9">Task 3:</label>
+            {{ form.task9 }}
+        </div>
+    </div>
+
+    <div class="term-box">
+        <h2>Term 4</h2>
+        <div class="term-details">
+            <label for="id_task10">Task 1:</label>
+            {{ form.task10 }}
+            <label for="id_task11">Task 2:</label>
+            {{ form.task11 }}
+            <label for="id_task12">Task 3:</label>
+            {{ form.task12 }}
+        </div>
+    </div>
+
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>

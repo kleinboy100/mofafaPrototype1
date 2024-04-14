@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Attendance List</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px; /* Adjust the gap as needed */
+        }
+        .form-container {
+            border: 1px solid #ccc; /* Optional: Add border for form container */
+            padding: 20px; /* Optional: Add padding for form container */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Learners Attendance</h2>
+    <div class="grid-container">
+        <div class="attendances-container">
+          <h1>Inbox</h1>
+          <ul>
+            {% for message in messages %}
+              <li>
+                <strong>From:</strong> {{ message.sender.username }}<br>
+                <strong>Content:</strong> {{ message.content }}<br>
+                <hr>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="form-container">
+          
+           
+        </div>
+    </div>
+</body>
+</html>

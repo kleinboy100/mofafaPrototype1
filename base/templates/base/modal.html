@@ -1,0 +1,28 @@
+
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+{% comment %} 
+ {% endcomment %}
+ <div id="uploadProfilePicModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Upload Profile Picture</h2>
+        <div class="current-profile-pic">
+            <h3>Current Profile Picture</h3>
+            {% if user.profile.profile_picture %}
+            <img src="{{ user.profile.profile_picture.url }}" alt="Current Profile Picture">
+            {% else %}
+            <img src="{% static 'path_to_default_image.jpg' %}" alt="Default Profile Picture">
+            {% endif %}
+        </div>
+        <form id="profilePicForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="profile_pic" accept="image/*">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+</div>
+
+  {% endblock %}

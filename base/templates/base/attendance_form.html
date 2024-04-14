@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Attendance List</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px; /* Adjust the gap as needed */
+        }
+        .form-container {
+            border: 1px solid #ccc; /* Optional: Add border for form container */
+            padding: 20px; /* Optional: Add padding for form container */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Learners Attendance</h2>
+    <div class="grid-container">
+        <div class="attendances-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Classroom</th>
+                        <th>Learner</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for attendance in attendance_instances %}
+                    <tr><td>{{ attendance.Week.name }}</td>
+                        <td>{{ attendance.classroom }}</td>
+                        <td>{{ attendance.learner }}</td>
+                        <td>{{ attendance.monday }}</td>
+                        <td>{{ attendance.tuesday }}</td>
+                        <td>{{ attendance.wednesday }}</td>
+                        <td>{{ attendance.thursday }}</td>
+                        <td>{{ attendance.friday }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="form-container">
+            <h3>Enter Attendance</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Save Attendance</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

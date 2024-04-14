@@ -1,0 +1,93 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<style>
+    /* Add your CSS styles here */
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 3fr; /* Divide into two columns, with the right column 3 times as wide */
+        grid-column-gap: 20px; /* Adjust spacing between columns */
+    }
+
+    .subject-button {
+        display: block;
+        margin-bottom: 5px;
+        padding: 8px;
+        background-color: #007bff; /* Adjust button color as needed */
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .subject-button:hover {
+        background-color: #0056b3; /* Adjust hover color as needed */
+    }
+
+
+
+    /* Example CSS styles for table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<div class="container">
+    <div>
+        <div style="padding: 20px;">
+        <h2>Subjects</h2>
+
+        <hr>
+        </div>
+        <div>
+            {% for subject in subjects %}
+                <a href="{% url 'subject-name' subject.id %}" class="subject-button">{{ subject.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <div style="padding: 20px;">
+            <h2>Learner Details</h2>
+    
+            <hr>
+            </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Gender</th>
+                    <th>Grade</th>
+                    <th>Classroom</th>
+                    <!-- Add more columns if needed -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for learner in all_learners %}
+                    <tr>
+                        <td>{{ learner.name }}</td>
+                        <td>{{ learner.surname }}</td>
+                        <td>{{ learner.gender }}</td>
+                        <td>{{ learner.gradeName }}</td>
+                        <td>{{ learner.classroomName }}</td>
+                        <!-- Add more columns if needed -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

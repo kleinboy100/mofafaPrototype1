@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h1>{{announcement.description}}</h1>
+
+
+<div class="comment-wrapper">
+    <h3>Messages</h3>
+    <hr>
+
+    {% for message in messages%}
+
+    <div>
+        <small>@{{message.user}}{{message.created|timesince}}</small>
+    </div>
+    {% endfor%}
+</div>
+    
+{% endblock %}

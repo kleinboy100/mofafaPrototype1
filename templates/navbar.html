@@ -1,0 +1,109 @@
+{%load static%}
+<style>
+    /* Style the buttons */
+    .blue-button {
+        background-color: #cccc;
+        border: none;
+        color: #000;
+        padding: 5px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s; /* Add smooth transition */
+
+    }
+    .activities__boxItem2 {
+        margin-bottom: 15px;
+        color: #000000;
+        border-radius: 20px;
+        padding: 10px;
+        box-shadow: 3px 13px 15px #00563f; /* Dark green */
+        background-color: #1877F2;
+        background-image: linear-gradient(to bottom, #cccccc, #0281A1);
+    }
+
+</style>
+<header class="header header--loggedIn">
+    
+  <div class="container">
+      <a href="{% url 'home'%}" class="header__logo">
+        <h1>Sgila</h1>
+          <img src="{% static 'images/logo.jpeg' %}" />
+          
+          
+          
+      </a>
+      <small>Welcome {{user.username}}</small>
+      <form class="header__search" method="GET" action="{% url 'home' %}">
+
+          <label>
+            
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                  <title>search</title>
+                  <path
+                      d="M32 30.586l-10.845-10.845c1.771-2.092 2.845-4.791 2.845-7.741 0-6.617-5.383-12-12-12s-12 5.383-12 12c0 6.617 5.383 12 12 12 2.949 0 5.649-1.074 7.741-2.845l10.845 10.845 1.414-1.414zM12 22c-5.514 0-10-4.486-10-10s4.486-10 10-10c5.514 0 10 4.486 10 10s-4.486 10-10 10z"
+                  ></path>
+              </svg>
+              <input name="q" placeholder="Search Learner Name..." />
+
+          </label>
+        
+             <div style="padding: 10px" class="navigation-strip" >
+            
+       
+        <!-- Add more buttons for other pages as needed -->
+        <button onclick="window.location.href='{% url 'home' %}'" >Home</button>
+        {% comment %} <button onclick="window.location.href='{% url 'create-announcement'%}'" class='activities__boxItem2'>New Post</button>
+        <button onclick="window.location.href='{% url 'chat_view'%}'" class='activities__boxItem2'>My School</button>
+        <button onclick="window.location.href='{% url 'chat_view' %}'" class='activities__boxItem2'>Ask ChatFriend</button>
+         {% endcomment %}
+
+    </div>
+      </form>
+    
+      <nav class="header__menu">
+          <!-- Navigation Strip Start -->
+         
+          <!-- Not Logged In -->
+          {% if request.user.is_authenticated %}
+          <div class="header__user">
+               
+                  
+                        <img src="{% static 'images/avatar.svg' %}" >
+                   
+                </a>
+                  <p>{{request.user.username}} <span>@{{request.user.username}}</span></p>
+              </a>
+              
+              {% comment %} <button class="dropdown-button">
+                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                      <title>chevron-down</title>
+                      <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
+                  </svg>
+              </button> {% endcomment %}
+            <div >
+            <a href="{% url 'logout' %}" class="blue-button">Logout</a>
+                  
+            </div>
+          </div>
+
+
+
+
+          {% else %}
+          <!-- Not Logged In -->
+          <a href="{% url 'login'  %}">
+            <img src="{% static 'images/avatar.svg' %}" >
+              <p>Login</p>
+          </a>
+          
+          <!-- Dropdown Menu -->
+          
+          {% endif %}
+      </nav>
+  </div>
+</header>

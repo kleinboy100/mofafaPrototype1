@@ -1,0 +1,145 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    {% if not has_user_profile %}
+        <!-- Render content for users without a UserProfile -->
+        <main class="layout layout---3">
+            <div class="container">
+                <!-- Left column content (1fr) -->
+                <!-- Include content for left column here -->
+                <!-- Example: -->
+            </div>
+            <div class="container">
+                <!-- Right column content (3fr) -->
+                <!-- Include content for right column here -->
+                <!-- Example: -->
+              
+            </div>
+        </main>
+    {% else %}
+        <!-- Render content for users with a UserProfile -->
+        <main class="layout layout--3">
+            <div class="container">
+                
+                <!-- Topics Start -->
+                {% include 'base/grade_component.html' %}
+                <!-- Topics End -->
+
+                <!-- Search Results Start -->
+                <style>
+                    /* Add your CSS styles here */
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+
+                    th, td {
+                        border: 2px solid #000;
+                        padding: 8px;
+                        text-align: left;
+                    }
+
+                    th {
+                        background-color: #fffccc;
+                    }
+
+                    /* Set background color of the container */
+                    .graph-container {
+                        background-color: #fff; /* Change this to white */
+                    }
+                </style>
+
+                <!-- Search results table -->
+                <div class="search-results">
+                    <div>
+                        {% if learners %}
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Surname</th>
+                                        <th>Gender</th>
+                                        <th>Grade</th>
+                                        <th>Classroom</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for learner in learners %}
+                                        <tr>
+                                            <td><a href="{% url 'learner-detail' learner.id %}">{{ learner.name }}</a></td>
+                                            <td>{{ learner.surname }}</td>
+                                            <td>{{ learner.gender }}</td>
+                                            <td>{{ learner.gradeName }}</td>
+                                            <td>{{ learner.classroomName }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                        <button onclick="window.location.href='{% url 'attendance'  %}'">Attendance</button>
+                        
+                            <button onclick="window.location.href='{% url 'chat_view' %}'">Ask ChatFriend</button>
+                            <button onclick="window.location.href='{% url 'create-announcement' %}'">New Post</button>
+                            
+                            <h5>Dashboard</h5>
+                            <hr>
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                            {% if marks_data_json %}
+                                <!-- Render graphs for each subject using the marks data -->
+                                {% for subject_name, marks_data in marks_data_json.items %}
+                                    <h2>{{ subject_name }}</h2>
+                                    <!-- Add class to the container for graphs -->
+                                    <div class="graph-container">
+                                        <canvas id="chart-{{ forloop.counter }}"></canvas>
+                                    </div>
+                                    <script>
+                                        var marksData = {{ marks_data|safe }};
+                                        var labels = marksData.map(item => item.learner__name);
+                                        var data = marksData.map(item => item.average_marks); // Change to use the average_marks field
+
+                                        // Define an array of blue solid background colors
+                                        var backgroundColors = Array(data.length).fill('rgba(54, 162, 235, 1)'); // Blue
+
+                                        var ctx = document.getElementById('chart-{{ forloop.counter }}').getContext('2d');
+                                        ctx.canvas.width *= 1.5; // Double the canvas width
+                                        ctx.canvas.height *= 1.5; // Double the canvas height
+                                        var chart = new Chart(ctx, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: labels,
+                                                datasets: [{
+                                                    label: 'Average Marks', // Change the label to "Average Marks"
+                                                    data: data,
+                                                    backgroundColor: backgroundColors,
+                                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                                    borderWidth: 1
+                                                }]
+                                            },
+                                            options: {
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true,
+                                                        ticks: {
+                                                            stepSize: 10
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    </script>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Search Results End -->
+
+                <!-- Activities Start -->
+                {% include 'base/activity_component.html' %}
+                <!-- Activities End -->
+            </div>
+        </main>
+    {% endif %}
+{% endblock %}

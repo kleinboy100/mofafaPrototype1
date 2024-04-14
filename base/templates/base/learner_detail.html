@@ -1,0 +1,100 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    .home-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 3fr; /* Divide into two columns, with the right column 3 times as wide */
+        grid-column-gap: 20px; /* Adjust spacing between columns */
+    }
+
+    .grades-column {
+        grid-column: 1; /* Grades column spans the first column */
+    }
+
+    .other-content-column {
+        grid-column: 2; /* Other content spans the second column */
+    }
+
+    .third-column {
+        grid-column: 3; /* Third column spans the third column */
+    }
+
+    .grade-container {
+        margin-bottom: 20px; /* Adjust spacing between grades */
+    }
+
+    .grade-container hr {
+        margin-top: 5px; /* Adjust spacing above the <hr> */
+    }
+
+    .grade-container select {
+        margin-top: 10px; /* Adjust spacing between grade name and dropdown list */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 2px solid #000;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #ffff;
+    }
+</style>
+
+<div class="home-container">
+    <div class="grades-column">
+<h1>Learner Details: {{ learners.name }} {{ learners.surname }}</h1>
+
+<div>
+   
+    <hr>
+    <p>{{ learners.gradeName }}</p>
+    <!-- Other learner details as needed -->
+<hr>
+
+</div>
+</div>
+<div class="other-content-column">
+<h2>Subjects and Marks Term 1</h2>
+
+<table>
+    <thead>
+        <tr><th>ID</th>
+            <th>Subject</th>
+            <th>Task 1 </th>
+            <th>Task 2 </th>
+            <th>Task 3 </th>
+            
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for mark in learners.marks.all %}
+        <tr><td>{{ mark.subject.id }}</td>
+            <td>{{ mark.subject.name }}</td>
+            <td>{{ mark.task1 }}</td>
+            <td>{{ mark.task2 }}</td>
+            <td>{{ mark.task3 }}</td>
+           
+          
+           
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<div class="third-column">
+    <!-- Content for the third column (if any) -->
+</div>
+</div>
+{% endblock %}

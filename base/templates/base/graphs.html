@@ -1,0 +1,44 @@
+{% comment %} <!-- graphs.html -->
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Ensure marks_list is available
+  console.log("Marks List:", {{ marks_list|safe }});
+
+  // Get canvas element
+  const ctx = document.getElementById('myChart').getContext('2d');
+
+  // Extract labels and data from marks_list
+  const labels = [{% for item in marks_list %}"{{ item.learner.name }} {{ item.learner.surname }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+  const data = [{% for item in marks_list %}[{{ item.term }}, {{ item.term2 }}, {{ item.term3 }}, {{ item.term4 }}]{% if not forloop.last %}, {% endif %}{% endfor %}];
+
+  // Debugging: Log labels and data
+  console.log("Labels:", labels);
+  console.log("Data:", data);
+
+  // Create chart
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Term Marks',
+        data: data,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script> {% endcomment %}

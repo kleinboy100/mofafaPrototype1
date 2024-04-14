@@ -1,0 +1,97 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<style>
+    /* Add your CSS styles here */
+    .home-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 3fr; /* Divide into two columns */
+        grid-column-gap: 20px; /* Adjust spacing between columns */
+    }
+
+    .subject-button {
+        display: block;
+        margin-bottom: 5px;
+        padding: 8px;
+        background-color: #007bff; /* Adjust button color as needed */
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .subject-button:hover {
+        background-color: #0056b3; /* Adjust hover color as needed */
+    }
+    .grade-container {
+        margin-bottom: 20px; /* Adjust spacing between grades */
+    }
+    /* Table styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 3px solid #fff;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        text-align: center; /* Align table header cells to center */
+    }
+</style>
+
+<div class="home-container">
+    <div>
+        <div style="padding: 20px;">
+        <h2>GRADE</h2>
+       
+
+
+    
+        </div>
+        <div>
+           <hr>
+           
+              {{ grade.name }}
+              
+           <hr>
+        </div>
+    </div>
+    
+    <div >
+        <div style="padding: 20px;">
+        <h2>Learners Details</h2>
+        <!-- Content for the second column -->
+        </div>
+        <hr>
+        <table>
+            <thead>
+                <tr><th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Gender</th>
+                    <th>Grade</th>
+                    <th>Classroom</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for learner in learners %}
+                <tr> <td>{{ learner.id}}</td>
+                    <td><a href="{% url 'learner-detail' learner.id %}">{{ learner.name }}</a></td>
+                    <td>{{ learner.surname }}</td>
+                    <td>{{ learner.gender }}</td>
+                    <td>{{ learner.gradeName }}</td>
+                    <td>{{ learner.classroomName }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

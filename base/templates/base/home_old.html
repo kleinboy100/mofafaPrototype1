@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+<style>
+    .home-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr; /* Divide into three columns, with the middle column twice as wide */
+        grid-column-gap: 20px; /* Adjust spacing between columns */
+    }
+
+    .grades-column {
+        grid-column: 1; /* Grades column spans the first column */
+    }
+
+    .other-content-column {
+        grid-column: 2; /* Other content spans the second column */
+    }
+
+    .third-column {
+
+        grid-column: 3; /* Third column spans the third column */
+    }
+
+    .grade-container {
+        margin-bottom: 20px; /* Adjust spacing between grades */
+    }
+
+    .grade-container hr {
+        margin-top: 5px; /* Adjust spacing above the <hr> */
+    }
+
+    .grade-container select {
+        margin-top: 10px; /* Adjust spacing between grade name and dropdown list */
+    }
+
+    .classroom-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .classroom-list li {
+        margin-bottom: 5px; /* Adjust spacing between classroom names */
+    }
+    
+</style>
+
+
+<div class="home-container">
+    
+        {% include 'base/grade_component.html'%}
+    </div>
+    
+    <div class="other-content-column" >
+        
+        <!-- Content for the second column -->
+       {%include 'base/feed_component.html'%}
+       
+    </div>
+</div>
+    
+    <div class="third-column">
+    {% include 'base/activity_component.html'%}
+    </div>
+
+        
+    </div>
+</div>
+
+{% endblock %}

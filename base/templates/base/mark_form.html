@@ -1,0 +1,126 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    .home-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr; /* Divide into three columns, with the middle column twice as wide */
+        grid-column-gap: 20px; /* Adjust spacing between columns */
+    }
+
+    .grades-column {
+        grid-column: 1; /* Grades column spans the first column */
+    }
+
+    .other-content-column {
+        grid-column: 2; /* Other content spans the second column */
+    }
+
+    .third-column {
+        grid-column: 3; /* Third column spans the third column */
+    }
+
+    .grade-container {
+        margin-bottom: 20px; /* Adjust spacing between grades */
+    }
+
+    .grade-container hr {
+        margin-top: 5px; /* Adjust spacing above the <hr> */
+    }
+
+    .grade-container select {
+        margin-top: 10px; /* Adjust spacing between grade name and dropdown list */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<div class="home-container">
+    <div class="grades-column">
+        <h3>Subject: 
+            
+            {{ subjects.name }}
+        </h3> <!-- Content for the first column (if any) -->
+    <hr>
+    
+    
+    
+    
+    </div>
+
+    <div class="other-content-column">
+        <h2>Learner Progress</h2>
+        <a href="{% url 'update-marks' pk=subjects.id %}">Edit Learners Marks</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>task 1</th>
+                    <th>task 2</th>
+                    <th>task 3</th>
+                    <th>task 4</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for learner in learners %}
+                <tr>
+                    <td>{{ learner.name }}</td>
+                    <td>{{ learner.surname }}</td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task1 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task2 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.task3 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for mark in marks %}
+                            {% if mark.learner == learner %}
+                                {{ mark.term }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Add your form or any other content here -->
+    </div>
+
+    <div class="third-column">
+        <!-- Content for the third column (if any) -->
+    </div>
+</div>
+
+{% endblock %}
